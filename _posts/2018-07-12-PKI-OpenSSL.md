@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      PKI OpenSSL
-subtitle:   three level SSL
+subtitle:   three level private key
 date:       2018-07-12
 author:     Richie
 header-img: img/post-PKI-linux-app.jpg
