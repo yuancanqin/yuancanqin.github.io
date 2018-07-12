@@ -1,9 +1,9 @@
 # Site settings
-title: BY Blog
+title: Richie Blog
 SEOTitle: 远灿的博客 | Richie Blog
 header-img: img/post-bg-desk.jpg
 email: yuancanqin@gmail.com
-description: "Every failure is leading towards success."
+description: "You don't know what you don't know."
 keyword: "Richie, Richie Blog, 远灿的博客, yuancanqin, 远灿覃, iOS, Apple, iPhone"
 url: "http://yuancanqin.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
@@ -12,7 +12,7 @@ github_repo: "https://github.com/yuancanqin/yuancanqin.github.io.git" # you code
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "Goals determine what you going to be!"
-sidebar-avatar: /img/about-BY-gentle.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/about-Richie-gentle.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
@@ -78,7 +78,7 @@ ba_track_id: b50bf2b12b5338a1845e33832976fd68
 
 # Google Analytics
 ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
-ga_domain: qiubaiying.top               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
+ga_domain: auto               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
 
 
 
