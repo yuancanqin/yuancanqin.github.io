@@ -233,10 +233,3 @@ richie@richie-VirtualBox:~/X1/ecu1$ ls
 ecu1cert.pem  ecu1key.pem  ecu1req.pem
 ca     # Sign the certificate
 -in    # Enter the certificate file
-
-
-
-
-@end
-
-```
