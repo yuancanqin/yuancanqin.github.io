@@ -56,8 +56,8 @@ kramdown:
 
 
 # 评论系统
-Disqus（https://disqus.com/）
-disqus_username: yuancanqin
+# Disqus（https://disqus.com/）
+# disqus_username:yuancanqin
 
 # Gitalk
 gitalk:
@@ -94,7 +94,7 @@ featured-condition-size: 1              # 相同标签数量大于这个数，�
 chrome-tab-theme-color: "#000000"
 service-worker: true
 
-
+disqus_shortname: yuancanqin
 
 # Friends
 friends: [
