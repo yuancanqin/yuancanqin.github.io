@@ -11,13 +11,16 @@ tags:
     - PKI
     - open source
 ---
-1.	Set up the root CA：
-1.1 Create the rootCA directories and files：
+#1.	Set up the root CA：
+###1.1 Create the rootCA directories and files：
+```
 richie@richie-VirtualBox:~/X1/rootca$ mkdir newcerts private conf
 richie@richie-VirtualBox:~/X1/rootca$ chmod g-rwx,o-rwx private
 richie@richie-VirtualBox:~/X1/rootca$ echo "01" > serial
 richie@richie-VirtualBox:~/X1/rootca$ touch index.txt
-1.2 Create the issuer's general information profile:
+```
+###1.2 Create the issuer's general information profile:
+```
 richie@richie-VirtualBox:~/X51/rootca$ vi "$HOME/X1/rootca/conf/gentestca.conf"
 gentestca.conf:
 ####################################
@@ -37,7 +40,9 @@ emailAddress = yuancanqin@hotmail.com
 [ ca_extensions ]
 basicConstraints = CA:true
 ########################################
-1.3 Create a profile：
+```
+###1.3 Create a profile：
+```
 richie@richie-VirtualBox:~/X1/rootca$ vi "$HOME/X1/rootca/conf/rootca.conf"
 rootca.conf:
 ####################################
@@ -71,8 +76,10 @@ commonName              = supplied
 emailAddress            = optional
  
 ########################################
-1.4 Generating CA private key and self-signed certificate (root certificate):
+```
+###1.4 Generating CA private key and self-signed certificate (root certificate):
 During the execution process, we need to enter the pass phrase to encrypt requester's key. Suggesting enter the password: 888888
+```
 richie@richie-VirtualBox:~/X1/rootca$ openssl req -x509 -newkey rsa:2048 -out rootcacert.pem -outform PEM -days 2190 -config "$HOME/X1/rootca/conf/gentestca.conf"
 Generating a 2048 bit RSA private key
 ...........................................................+++
@@ -83,19 +90,23 @@ Verifying - Enter PEM pass phrase:
 -----
 richie@richie-VirtualBox:~/X1/rootca$ ls
 conf  index.txt  newcerts  private  rootcacert.pem  serial
-req    # Generate a certificate request file
--x509 # Dedicated to CA to generate self-signed certificate
-rsa:2048  # The encryption length is 2048
--new  # Generating new certificate signing request
--key  # Generate the private key file used for the request
--days # Validity period of the certificate
-2.	Set up the subCA：
-2.1 Create the subCA directories and files：
+```
+- `req`    # Generate a certificate request file
+- `-x509` # Dedicated to CA to generate self-signed certificate
+- `rsa:2048`  # The encryption length is 2048
+- `-new`  # Generating new certificate signing request
+- `-key`  # Generate the private key file used for the request
+- `-days` # Validity period of the certificate
+#2.	Set up the subCA：
+###2.1 Create the subCA directories and files：
+```
 richie@richie-VirtualBox:~/X1/subca$ mkdir newcerts private conf
 richie@richie-VirtualBox:~/X1/subca$ chmod g-rwx,o-rwx private
 richie@richie-VirtualBox:~/X1/subca$ echo "01" > serial
 richie@richie-VirtualBox:~/X1/subca$ touch index.txt
-2.2 Create the file of sub issuer's information:
+```
+###2.2 Create the file of sub issuer's information:
+```
 richie@richie-VirtualBox:~/X1/subca$ vi "$HOME/X1/subca/conf/gentestca.conf" 
 gentestca.conf:
 ####################################
@@ -115,7 +126,9 @@ emailAddress = yuancanqin@hotmail.com
 [ ca_extensions ]
 basicConstraints = CA:true
 ########################################
-2.3 Create a profile：
+```
+###2.3 Create a profile：
+```
 richie@richie-VirtualBox:~/X1/subca$ vi "$HOME/X1/subca/conf/subca.conf"
 subca.conf:
 ####################################
@@ -149,7 +162,9 @@ commonName              = supplied
 emailAddress            = optional
  
 ########################################
- 2.4 Create a private key and CSR (a public key is included in the certificate request):
+```
+###2.4 Create a private key and CSR (a public key is included in the certificate request):
+```
 richie@richie-VirtualBox:~/X1/subca$ openssl req -newkey rsa:1024 -keyout subcakey.pem -keyform PEM -out subcareq.pem -outform PEM -subj "/O=SubcaCom/OU=SubcaOU/CN=subca" 
 Generating a 1024 bit RSA private key
 .............++++++
@@ -160,13 +175,15 @@ Verifying - Enter PEM pass phrase:
 -----
 richie@richie-VirtualBox:~/X1/subca$ ls
 conf  index.txt  newcerts  private  serial  subcakey.pem  subcareq.pem
-req    # Generate a certificate request file
-rsa:2048  # The encryption length is 2048
--new  # Generating new certificate signing request
--key  # Generate the private key file used for the request
--days # Validity period of the certificate
+```
+- `req`    # Generate a certificate request file
+- `rsa:2048`  # The encryption length is 2048
+- `-new`  # Generating new certificate signing request
+- `-key`  # Generate the private key file used for the request
+- `-days` # Validity period of the certificate
 
-2.5 Issue the certificate for subCA with rootCA:
+###2.5 Issue the certificate for subCA with rootCA:
+```
 richie@richie-VirtualBox:~/X1/subca$ openssl ca -in subcareq.pem -out subcacert.pem -config "$HOME/X1/rootca/conf/rootca.conf"
 Using configuration from /home/richie/X1/rootca/conf/rootca.conf
 Enter pass phrase for /home/richie/X1/rootca/private/rootcakey.pem:
@@ -189,11 +206,13 @@ Data Base Updated
 richie@richie-VirtualBox:~/X1/subca$ ls
 conf       newcerts  serial         subcakey.pem
 index.txt  private   subcacert.pem  subcareq.pem
-ca     # Sign the certificate
--in    # Enter the certificate file
+```
+- `ca`     # Sign the certificate
+- `-in`    # Enter the certificate file
 
-3.	Issue Ecu1 CA
-3.1 Create a private key and CSR (a public key is included in the certificate request):
+#3.	Issue Ecu1 CA
+###3.1 Create a private key and CSR (a public key is included in the certificate request):
+```
 richie@richie-VirtualBox:~/X51/ecu1$ openssl req -newkey rsa:1024 -keyout ecu1key.pem -keyform PEM -out ecu1req.pem -outform PEM -subj "/O=Ecu1Com/OU=Ecu1OU/CN=ecu1" 
 Generating a 1024 bit RSA private key
 ................................................++++++
@@ -204,12 +223,14 @@ Verifying - Enter PEM pass phrase:
 -----
 richie@richie-VirtualBox:~/X1/ecu1$ ls
 ecu1key.pem  ecu1req.pem
-req    # Generate a certificate request file
-rsa:1024  # The encryption length is 2048
--new  # Generating new certificate signing request
--key  # Generate the private key file used for the request
+```
+- `req`    # Generate a certificate request file
+- `rsa:1024`  # The encryption length is 2048
+- `-new`  # Generating new certificate signing request
+- `-key`  # Generate the private key file used for the request
 
-3.2 Issue the certificate for ecu1 with subCA:
+###3.2 Issue the certificate for ecu1 with subCA:
+```
 richie@richie-VirtualBox:~/X1/ecu1$ openssl ca -in ecu1req.pem -out ecu1cert.pem -config "$HOME/X1/subca/conf/subca.conf"
 Using configuration from /home/richie/X1/subca/conf/subca.conf
 Enter pass phrase for /home/richie/X1/subca/private/subcakey.pem:
@@ -231,5 +252,6 @@ Write out database with 1 new entries
 Data Base Updated
 richie@richie-VirtualBox:~/X1/ecu1$ ls
 ecu1cert.pem  ecu1key.pem  ecu1req.pem
-ca     # Sign the certificate
--in    # Enter the certificate file
+```
+- `ca`     # Sign the certificate
+- `-in`    # Enter the certificate file
