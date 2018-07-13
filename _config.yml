@@ -94,8 +94,7 @@ featured-condition-size: 1              # 相同标签数量大于这个数，�
 chrome-tab-theme-color: "#000000"
 service-worker: true
 
-# Disqus（https://disqus.com/）
-disqus_shortname: "yuancanqin"
+
 
 # Friends
 friends: [
@@ -103,7 +102,7 @@ friends: [
         #title: "WY",
         #href: "http://zhengwuyang.com"
     },{
-        #title: "简书·BY",
+        #title: "简书·Richie",
         #href: "http://www.jianshu.com/u/e71990ada2fd"
     },{
         #title: "Apple",
