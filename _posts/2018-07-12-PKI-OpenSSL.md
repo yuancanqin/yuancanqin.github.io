@@ -21,7 +21,7 @@ richie@richie-VirtualBox:~/X1/rootca$ touch index.txt
 ```
 ### 1.2 Create the issuer's general information profile:
 ```
-richie@richie-VirtualBox:~/X51/rootca$ vi "$HOME/X1/rootca/conf/gentestca.conf"
+richie@richie-VirtualBox:~/X1/rootca$ vi "$HOME/X1/rootca/conf/gentestca.conf"
 gentestca.conf:
 ####################################
 [ req ]
