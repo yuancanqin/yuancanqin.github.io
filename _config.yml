@@ -1,10 +1,10 @@
 # Site settings
 title: Richie Blog
-SEOTitle: 远灿的博客 | Richie Blog
+SEOTitle: Yuancan.Qin Blog
 header-img: img/post-bg-desk.jpg
 email: yuancanqin@gmail.com
 description: "All of us will be fucked in the end"
-keyword: "Richie, Richie Blog, 远灿的博客, yuancanqin, 覃远灿, iOS, Apple, iPhone"
+keyword: "Richie, Richie Blog, 远灿的博客, yuancanqin, Yuancan.Qin, iOS, Apple, iPhone"
 url: "http://yuancanqin.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/yuancanqin/yuancanqin.github.io.git" # you code repository
@@ -18,11 +18,11 @@ sidebar-avatar: /img/about-YC-gentle.jpg      # use absolute URL, seeing it's us
 
 # SNS settings
 RSS: false
-weibo_username:     Richie_Qin_WWF
+weibo_username: Richie_Qin_WWF
 #zhihu_username:     
-github_username:    yuancanqin
-facebook_username:  Richie Qin
-#jianshu_username:   e71990ada2fd
+github_username: yuancanqin
+facebook_username: Richie Qin
+#jianshu_username:
 #twitter_username:   yuancanqin
 
 
