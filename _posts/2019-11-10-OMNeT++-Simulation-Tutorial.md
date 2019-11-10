@@ -44,6 +44,7 @@ simple RoutingUnit
 # 3.    .ned
 每个仿真模型是一个复合模块类型的实例。这一层次（组件和拓扑）由NED文件来处理。
 NED文件只定义了模型的结构（拓扑），其行为和模块参数的某个子集则是开放的，行为是通过在简单模块相关联的C++代码来定义的，在NED文件中的参数赋值首先进行，而那些没有赋值的的参数则可以在ini文件中赋值（也就是说，在NED中的参数值不能被ini文件中的值覆盖）。如果最后仍然有一些参数没有被赋值，则会在运行时以交互的方式取得。
+
 1)简单块由simple关键字来声明的。
 简单模块是其他(复合)模块的基本构建块，简单模块类型由名称标识，简单模块通过声明参数和门来定义，一个名为sink的组件可以用NED来描述：
 ```
@@ -93,7 +94,8 @@ module VlanEtherHostFullLoad
 所有的域(parameters, gates, submodules, connections) 都是可选的。通常复合模块参数是用于传递给子模块，对子模块的参数初始化的。
 
 基于这些模块则可以构成一个NED网络。并用network关键字来表示它可以通过自身运行。
-例如构成一个MulticastNetwork并用network关键字来表示它可以通过自身运行。例如构成一个MulticastNetwork,
+例如构成一个MulticastNetwork:
+
 ```
 network MulticastNetwork
 {
@@ -149,16 +151,25 @@ OMNeT++默认的随机数生成器是 Mersenne Twister，种子可以自动获�
 
 # 8.    用C++编写模型
 简单模块其实是C++类，从cSimpleModule继承子类，重定义一个虚成员函数，并通过Define_Module()宏来将新的类注册到OMNeT++中。
+
 模块间主要使用消息传递进行通讯，而timers(timeouts)也处理模块发送给自身的消息。消息应当是cMessage类或者是其子类，消息将被传递到模块的 handleMessage(cMessage *msg) 方法，在这里应当添加你的代码。几乎你想定义的模块行为都在handleMessage() 之中定义，因此这段代码块可能会很长，所以将其重构为其它成员函数例如命名为processTimer(),processPacket()是一个好主意（可以将activity() 方法视为handleMessage()的一个替换，但是在实践中最好不要这么做）。
+
 你可以使用send(cMessage *msg, const char *outGateName) 方法来向其它模块传递消息，对于无线仿真和一些情况下，则可以更方便地直接传递消息到其它模块而不用在NED文件中建立连接。这可以由sendDirect(cMessage *msg, double delay, cModule *targetModule, const char *inGateName)方法来完成。Self-messages (that is, timers can be scheduled) 可以通过scheduleAt(simtime_t time, cMessage *msg) 进行传送，并且在它们失效前可以通过cancelEvent(cMessage *msg) 来取消。这些函数都是cSimpleModule类的成员，在文档中可以找到更多的相关信息。
+
 基本的cMessage类包含几个数据成员，最重要也最实用的是name,length,message”kind”(一个int成员)。其它数据成员则存储此消息最近发送/调度的信息：arrival time,arrival gate等。为了进行协议仿真，cMessage可以封装另外一个cMessage对象，可以查看它的encapsulate(cMessage *msg) 方法进行了解。这些方法也能逐步地修改域的长度。如果你需要在消息中运送更多的数据，其它数据成员可以通过继承来添加。然而，你并不需要手工编写新的C++类，可以更方便地在一个.msg文件中定义，从而让OMNet++( opp_msgc 工具) 来为你生成C++类。生成的C++文件会拥有_m.h,m.cc的后缀。.msg文件支持进一步的继承，组合，数组成员等等，并且它拥有可以让在C++类中自定义的语法。一个消息文件的例子如下：
 message NetworkPacket { fields: int srcAddr; int destAddr; }
+
 OMNet++经常用来进行网络协议的仿真，cMessage有一个叫control info的域，它包含额外的信息来促进协议层间的通讯。例如，当应用层发送数据（一个消息对象）到TCP来传输时，它能在包含socket标志符的信息中附加一小段控制信息(一个对象)。或者，当TCP发送一个TCP segment到IP层传输时，它附加包含目标IP地址的控制信息，也可能是其它的一些选项，如TTL。控制信息也能发送到其它方向（向上），以便向上一层标记源IP地址或者TCP连接。控制信息是通过cMessage的 setControlInfo(cPolymorpic *ctrl) 和 removeControlInfo() 方法来处理的。
+
 其它cSimpleModule模块中需要重定义的虚成员函数是initialize()( 主要的初始化工作在这里进行，因为在构造函数的调用过程中模型也正在构建)，initialize(int stage) 和多阶段初始化的int numinitStages() const(这在一个模块的初始化代码依赖于其它已经初始化完毕的模块时很有用)，finish()来记录总的结果（析构函数不适宜用于这种用途）。如果你想要模块感知参数（参数可以交互式地在GUI中或由其它模块改变，因此你需要重新读取这个参数）在运行时的改变，则需要重定义handleParameterChange(const char *paramName)方法。
+
 简单模块的NED参数可以使用使用par(const char paramName) 方法来读取，在典型的情况下，这个过程会在initialize()中进行，并将这些值存储在模块类的数据成员中。par()返回一个cPar对象的引用，这个引用可以用C++的语法或调用对象的doubleValue()方法等这些途径转为合适的类型（long,double,const char,etc）。除了基本的类型，也可以是XML文件：参数可以赋值到XML文件中，它能用以DOM的对象树的形式向C++代码展示。
+
 消息传递并不总是模块间通讯的最好方法。例如，如果你设计了一个用于收集统计的模块（常使用全局变量），通过消息来传递统计量的更新，不如将统计模块作为一个C++对象，并调用它的用于此目的的公共成员函数（如updateStatistics(…)）来得简便。
+
 对方法的直接调用有一些技术细节。首先你需要查找其它模块：cModule的parentModule() 和submodule(const char*name)方法可以查找到与当前相关的模块，而simulation.moduleByPath(const char path) 可以通过一个绝对的路径名在全局查找一个模块，一旦你拥有其它模块的指针，你需要将它转化为实际的类型(i.e. to StatisticsCollector from cModule*)，这是由拥有与C++的dynamic_cast相同语法的check_and_cast来完成，但如果转换不成功或指针为NULL时它会抛出一个错误。public的方法应当将Enther_Method()或者Enter_Method_Silent(…) 放置在顶端，它们启用了GUI的动画调用，同时进行了一些与临时上下文切换相近的行为（在这里并不深究，但如果想要在方法中进行消息处理这是必须的）。INET框架广泛地使用了方法调用来访问模块，如RoutingTable, InterfaceTable, NotificationBoard等。
 INET的NotificationBoard在一些仿真中很有用，它通过对信息的产生者和消费者进行解耦，在它们之间转发变化的notifications或者事件的notifications，从而支持几个模块间的信息共享（NotificationBoard宽泛地基于blackboard 区域，但在实践中，仅转发notifications比存储blackboard中发布的信息更简单有效。进一步地，notifications可能包含实际的数据或者指向数据的指针的拷贝）。
+
 对于调试，模块中打印一些必要的信息是很关键的。在OMNet++中使用ev<< （类似于printf和cout）将输出写到可以进行过滤的GUI窗口中，同时模块用图标的颜色或文件标签及tooltips来展示状态也有助于减少调试的时间；这个可以通过在执行时改变display string来完成（查看cModule’s displayString()）。通过调用bubble(const char*text)方法，可以在模块的上方看到一个短暂出现的“气泡”或“气球”，这也是很有帮助的。另外一种调试的辅助是WATCH(variableName) 宏及其变种 (WATCH_VECTOR, 等)，它能让你在Tkenv GUI中查看变量的值（you’ll find watched variables in the “Contents” tab of the module’s inspector)。
 为了记录输出向量，你应当添加一个cOutVector对象到类中作为一个数据成员（或者用new来创建），设置name string作为输出向量的名字，然后持续调用它的record(double value)方法来记录数字。输出标量最好编写在模块（请查看cModule中的 recordScalar(const char *name, double value) 方法）的finish() 函数中，可以基于计数器作为模块的数据成员。也可以计算基本的统计和图表：请参考cStdDev, cDoubleHistogram and cLongHistogram classes 这些类。
 NED文件描述静态的拓扑，但也能动态地创建模块和连接。这在网络拓扑不是以NED文件（如普通文本文件，Excel sheet，database等）存储，或者你想在运行时动态地创建和删除模块的情况下很有用。在前一种情况下，一般可以通过Awk,Perl,Python,Ruby,TCL或在文本编辑中一系列的查找/匹配操作来将数据转化为NED。然而，当你决定以C++来创建动态模块时，对一个样本NED文件调用nedtool并查看生成的_n.cc文件会很有帮助。
