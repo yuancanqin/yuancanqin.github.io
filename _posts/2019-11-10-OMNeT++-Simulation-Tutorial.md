@@ -4,7 +4,7 @@ title:      OMNeT++ Simulation tutorial
 subtitle:   OMNeT++
 date:       2019-11-10
 author:     Richie
-header-img: img/post-OMNeT++diagram.jpg
+header-img: img/post-OMNeT++-diagram.jpg
 catalog: true
 tags:
     - OMNeT++
