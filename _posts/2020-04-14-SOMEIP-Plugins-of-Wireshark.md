@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      SOMEIP Plugins of Wireshark
+title:      SOME/IP Plugins of Wireshark
 subtitle:   Wireshark Plugins
 date:       2020-04-14
 author:     Richie
