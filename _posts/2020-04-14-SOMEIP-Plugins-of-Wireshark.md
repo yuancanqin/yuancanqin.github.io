@@ -37,7 +37,8 @@ local f_more_seg    = ProtoField.uint8("someipa.tp_more_segments","More Segments
 ```
 Just a replacement of the "someip." by "someipa." to avoid the Proto bad argument.
 this can bring you get the plugins in your wireshark loading correct at least.
-if you get the better Idea about this, PLZ sharing your brilliant idea.
+But the wireshark will get stuck sometimes when loading the trace in it.
+If you get the better Idea about this, PLZ sharing your brilliant idea.
 
 
 
