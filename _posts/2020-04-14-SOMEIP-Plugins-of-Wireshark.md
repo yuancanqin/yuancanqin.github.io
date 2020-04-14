@@ -36,7 +36,7 @@ local f_reserved    = ProtoField.uint8("someipa.tp_reserved","Reserved",base.HEX
 local f_more_seg    = ProtoField.uint8("someipa.tp_more_segments","More Segments",base.DEC,nil,0x01)
 ```
 Just a replacement of the "someip." by "someipa." to avoid the Proto bad argument.
-this can bring you get the plugins in your wireshark loading correct at least.
+This can bring you get the plugins in your wireshark loading correct at least.
 
 But the wireshark will get stuck sometimes when loading the trace in it.
 
