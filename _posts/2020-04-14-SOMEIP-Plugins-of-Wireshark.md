@@ -15,7 +15,8 @@ There're several open source projects about SOME/IP plugins on the Internet. One
 # 2.	Modification of someip.lua file
 if you get the notice from Wireshark when you load the plugins at the very beginning as below:
 someip.lua:13:in main chunk
- For this issue I got a temporary solution as modifying the source code as below:
+
+For this issue I got a temporary solution as modifying the source code as below:
 ```
 p_someip = Proto("someipa","Scalable service-Oriented MiddlewarE over IP")
 
@@ -34,7 +35,9 @@ local f_more_seg    = ProtoField.uint8("someipa.tp_more_segments","More Segments
 ```
 Just a replacement of the "someip." by "someipa." to avoid the Proto bad argument.
 this can bring you get the plugins in your wireshark loading correct at least.
+
 But the wireshark will get stuck sometimes when loading the trace in it.
+
 If you get the better Idea about this, PLZ sharing your brilliant idea.
 
 
