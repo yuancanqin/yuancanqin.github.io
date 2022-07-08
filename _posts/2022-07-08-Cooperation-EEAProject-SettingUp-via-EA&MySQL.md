@@ -38,7 +38,7 @@ mysql> source /home/abc/EASchema_1220_MySQL.sql       # import the EEA project s
 ```
 
 # 5.	troubleshooting
-The error message Got a packet bigger than 'MAX_allowed_packet' bytes may be displayed when the local project is imported to the Server Database. The solution is as follows: 
+The error message 'Got a packet bigger than 'MAX_allowed_packet' bytes' may be displayed when the local project is imported to the Server Database. The solution is as follows: 
 ```
 show VARIABLES like ‘%max_allowed_packet%’;     # check the max_allowed_packet value
 Result showing as ：
