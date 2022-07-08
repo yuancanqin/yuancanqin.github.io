@@ -11,7 +11,7 @@ tags:
 ---
 
 # 1.	Apply the Server Resource or Workstation 
-Log into Server or start up the workstation,  install the MySQL Server，and set up Database.
+Log into Server or start up the workstation,  install MySQL Server, and set up Database.
 
 # 2.	Installation Package Preparation
 1) MySQL Server Download,
