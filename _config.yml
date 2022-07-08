@@ -80,7 +80,12 @@ gitalk:
 # Google Analytics
 # ga_track_id: 'UA-xxxxxx-xx'            # Format: UA-xxxxxx-xx
 # ga_domain: auto               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
-
+web analytics:
+    enable: true
+    leancloud:
+    app_id: rOdSXNtzDFHTnpxfGLSnbkxm-MdYXbMMI
+    app_key: g1vDG8RfxGIEOi0aiK8VaVwN
+    server_url:
 
 
 
@@ -113,3 +118,10 @@ friends: [
         #href: "https://developer.apple.com/"
     }
 ]
+
+
+statistics:
+    enable: true
+    source: "leancloud"
+    pv_format: "total Access number {}"
+    uv_format: "total visitors {}"
