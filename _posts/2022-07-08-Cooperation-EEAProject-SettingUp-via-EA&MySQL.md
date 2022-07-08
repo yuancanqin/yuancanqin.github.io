@@ -16,10 +16,12 @@ Log into Server or start up the workstation,  install MySQL Server, and set up D
 # 2.	Installation Package Preparation
 1) MySQL Server Download,
 https://downloads.mysql.com/archives/community/
+
 Version Recommend: 5.5.62, 64 bit
 
 2) Enterprise Architect Schema Creation Scripts Download,
 https://sparxsystems.com/resources/repositories/index.html
+
 Version Recommend: EASchema_1220_MySQL.sql
 
 # 3.	MySQL Server Installation
