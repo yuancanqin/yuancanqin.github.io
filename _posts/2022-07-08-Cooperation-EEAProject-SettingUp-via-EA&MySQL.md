@@ -28,6 +28,7 @@ https://www.cnblogs.com/DeepInThought/p/10726857.html
 
 # 4.	Create a Project in a MySQL Database
 1) Open MySQL Client and log in with PWD;
+
 2) Create Database and import Database script
 ```
 mysql> create database abc;      # Create Database, named: abc
